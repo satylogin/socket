@@ -7,7 +7,7 @@
 #include <netinet/in.h>
 
 #define SIZE 256
-#define c_PORT 5501
+#define C_PORT 5501
 #define S_PORT 5500
 
 void error(char msg[])
@@ -43,7 +43,7 @@ int main()
 
 	s_addr.sin_family	= AF_INET;
 	s_addr.sin_port		= htons(S_PORT);
-	s_addr.sin_addr.c_addr	= INADDR_ANY;
+	s_addr.sin_addr.s_addr	= INADDR_ANY;
 	// inet_pton(AF_INET, ip, &s_addr.sin_addr);
 
 	tmp = connect(c_sock, (const struct sockaddr *)&s_addr, sizeof(s_addr));
@@ -53,15 +53,16 @@ int main()
 	}
 
 	char buffer[SIZE+1];
-	printf("Enter the msg:\n");
-	while (1) {
-		scanf("%s", buffer);
-		int count = send(c_sock, (void*)buffer, sizeof(buffer), 0);
+	printf("Enter the float:\n");
 
-		if (strcmp(buffer, "bye") == 0) {
-			printf("Exiting chatbot.\n");
-			break;
-		}
+	float num;
+	scanf("%f", &num);
+	sprintf(buffer, "%f", num);
+
+	int count = send(c_sock, (void*)buffer, strlen(buffer), 0);
+
+	if (strcmp(buffer, "bye") == 0) {
+		printf("Exiting chatbot.\n");
 	}
 
 	close(c_sock);
