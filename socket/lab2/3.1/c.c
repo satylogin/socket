@@ -77,10 +77,8 @@ int main()
 			i = strlen(buffer);
 			buffer[i] = EXT;
 			buffer[i+1] = '\0';
-		} else {
-			break;
 		}
-
+		
 		if (send(c_sock, (void*)buffer, strlen(buffer), 0) == -1) {
 			printf("error in sending.");
 			continue;
